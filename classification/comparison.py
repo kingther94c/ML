@@ -49,37 +49,37 @@ param_grid_nn = {"hidden_layer_sizes": [64, (4, 16), (8, 8), (16, 4), (4, 4, 4)]
 
 if __name__ == "__main__":
     scorer = make_scorer(balanced_accuracy_score)
-    # # MNIST
-    # print("===============================MNIST===============================")
-    # X, y = fetch_mnist()
-    # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, random_state=42)
-    # num_features = X_train.shape[0]
-    #
-    # # Select model
-    # model_candidates = {
-    #     "Decision Tree": (DecisionTreeClassifier, calc_param_grid_decision_train(num_features)),
-    #     "XGBoosting": (XGBClassifier, param_grid_xgb),
-    #     "Support Vector Machine": (SGDClassifier, param_grid_svm_sgd),
-    #     "KNN": (KNeighborsClassifier, param_grid_knn),
-    #     "Neural Network": (MLPClassifier, param_grid_nn)
-    # }
-    # models = {k: select_models(v[0], v[1], X_train, y_train) for k, v in model_candidates.items()}
-    #
-    # for model_name, model in models.items():
-    #     print(model_name)
-    #     print(model)
-    #     start = time.time()
-    #     model.fit(X_train, y_train)
-    #     end = time.time()
-    #     print("Training Time", end-start)
-    #
-    #     print("Train:", scorer(model, X=X_train, y_true=y_train))
-    #     start = time.time()
-    #     print("Test:", scorer(model, X=X_test, y_true=y_test))
-    #     end = time.time()
-    #     print("Prediction Time", end - start)
-    #
-    # compare(X_train, X_test, y_train, y_test, models, dataset_name="MNIST", scorer=scorer)
+    # MNIST
+    print("===============================MNIST===============================")
+    X, y = fetch_mnist()
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.4, random_state=42)
+    num_features = X_train.shape[0]
+
+    # Select model
+    model_candidates = {
+        "Decision Tree": (DecisionTreeClassifier, calc_param_grid_decision_train(num_features)),
+        "XGBoosting": (XGBClassifier, param_grid_xgb),
+        "Support Vector Machine": (SGDClassifier, param_grid_svm_sgd),
+        "KNN": (KNeighborsClassifier, param_grid_knn),
+        "Neural Network": (MLPClassifier, param_grid_nn)
+    }
+    models = {k: select_models(v[0], v[1], X_train, y_train) for k, v in model_candidates.items()}
+
+    for model_name, model in models.items():
+        print(model_name)
+        print(model)
+        start = time.time()
+        model.fit(X_train, y_train)
+        end = time.time()
+        print("Training Time", end-start)
+
+        print("Train:", scorer(model, X=X_train, y_true=y_train))
+        start = time.time()
+        print("Test:", scorer(model, X=X_test, y_true=y_test))
+        end = time.time()
+        print("Prediction Time", end - start)
+
+    compare(X_train, X_test, y_train, y_test, models, dataset_name="MNIST", scorer=scorer)
 
     # Wine Quality
     print("===============================Wine Quality===============================")
