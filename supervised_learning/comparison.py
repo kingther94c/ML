@@ -5,7 +5,8 @@
 # * Neural networks
 import time
 
-from utils import *
+from supervised_learning.utils import *
+from supervised_learning.utils import build_pipeline
 from sklearn.datasets import fetch_openml, load_wine
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
@@ -18,12 +19,12 @@ from sklearn.metrics import balanced_accuracy_score
 from sklearn.metrics import make_scorer
 
 
-def compare(X_train, X_test, y_train, y_test, models, dataset_name="", scorer=balanced_accuracy_score):
+def compare(X_train, X_test, y_train, y_test, models, dataset_name="", scorer=balanced_accuracy_score, n_jobs=-3):
     for model_name, model in models.items():
         print(f"{model_name} on {dataset_name}")
         pipeline = build_pipeline(model)
         fig = plot_learning_curve(estimator=pipeline, title=f"Learning Curve - {model_name}", X=np.r_[X_train, X_test],
-                                  y=np.r_[y_train, y_test], cv=None, scorer=scorer)
+                                  y=np.r_[y_train, y_test], cv=None, scorer=scorer, n_jobs=n_jobs)
         fig.savefig(f'../output/{dataset_name}-{model_name}-Learning Curve.png')
         if hasattr(model, "partial_fit"):
             fig = plot_training_curve(pipeline, X_train, y_train, X_test, y_test, title="Performance over iterations",

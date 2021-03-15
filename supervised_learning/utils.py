@@ -27,10 +27,10 @@ def fetch_mnist():
 
 def fetch_wine():
     wine_red = "../dataset/winequality-red.csv"
-    data_red = pd.read_csv(wine_red, delimiter=";")
+    data_red = pd.read_csv(wine_red, delimiter=",")
     data_red["is_red"] = 1
     wine_white = "../dataset/winequality-white.csv"
-    data_white = pd.read_csv(wine_white, delimiter=";")
+    data_white = pd.read_csv(wine_white, delimiter=",")
     data_white["is_red"] = 0
 
     data = pd.concat([data_red, data_white])
