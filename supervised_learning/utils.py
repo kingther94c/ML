@@ -19,6 +19,8 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from imblearn.over_sampling import SMOTE
 from sklearn.metrics import balanced_accuracy_score
+import time
+from tqdm import tqdm
 
 
 def fetch_mnist():
@@ -35,7 +37,8 @@ def fetch_wine():
 
     data = pd.concat([data_red, data_white])
     y = data.quality.apply(lambda x: 0 if x == 5 else (1 if x >5 else -1))
-    X = data.iloc[:, :-1]
+    cols = [col for col in data.columns if col != "quality"]
+    X = data.loc[:, cols]
     return X, y
 
 
