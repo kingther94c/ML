@@ -6,6 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import adjusted_rand_score, adjusted_mutual_info_score, make_scorer, balanced_accuracy_score
 import matplotlib.pyplot as plt
 from sklearn.neural_network import MLPClassifier
+from sklearn.preprocessing import StandardScaler
 
 from supervised_learning.utils import fetch_mnist, fetch_wine, build_pipeline
 from unsupervised_learning.utils import clustering_k, dim_reduction_k, feature_selection_k, clustering_as_dr_k
@@ -17,6 +18,8 @@ from sklearn.model_selection import train_test_split, learning_curve, ShuffleSpl
 dataset_prefix = "Wine"
 dataset_dict = {}
 X, y = fetch_wine()
+stder = StandardScaler()
+X = stder.fit_transform(X)
 dataset_dict[dataset_prefix+"_original"] = train_test_split(X, y, test_size=0.4, random_state=13)
 dataset_dict_exp5 = {}
 # X, y = fetch_mnist()
